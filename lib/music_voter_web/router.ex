@@ -8,7 +8,6 @@ defmodule MusicVoterWeb.Router do
     plug Phoenix.LiveView.Flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :put_layout, {MusicVoterWeb.LayoutView, :app}
   end
 
   pipeline :api do
@@ -18,11 +17,6 @@ defmodule MusicVoterWeb.Router do
   scope "/", MusicVoterWeb do
     pipe_through :browser
 
-    live "/", MusicVoterLive
+    get "/", PageController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", MusicVoterWeb do
-  #   pipe_through :api
-  # end
 end
