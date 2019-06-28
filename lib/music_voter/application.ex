@@ -8,10 +8,11 @@ defmodule MusicVoter.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the endpoint when the application starts
-      MusicVoterWeb.Endpoint
-      # Starts a worker by calling: MusicVoter.Worker.start_link(arg)
-      # {MusicVoter.Worker, arg},
+      MusicVoterWeb.Endpoint,
+      %{
+        id: MusicVoter.SongList,
+        start: {MusicVoter.SongList, :start_link, []}
+      }
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

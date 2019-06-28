@@ -1,5 +1,13 @@
 <div>
-  <h1>The counter is: <%= @val %></h1>
+  <ul>
+  <%= for song <- @songs do %>
+    <li><%= song.url %></li>
+  <% end %>
+  </ul>
+  <form action="#" phx-submit="add">
+    <%= text_input :song, :url, placeholder: "Enter a youtube url" %>
+    <%= submit "Add", phx_disable_with: "Adding" %>
+  </form>
   <button phx-click="dec">-</button>
   <button phx-click="inc">+</button>
 </div>
