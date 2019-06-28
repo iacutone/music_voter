@@ -10,16 +10,20 @@ defmodule MusicVoterWeb.MusicVoterLive do
     {:ok, fetch_videos(socket)}
   end
 
-  def handle_event("inc", _value, socket) do
-    {:noreply, update(socket, :val, &(&1 + 1))}
+  def handle_event("inc", id, socket) do
+    {int, string} = Integer.parse(id)
+    MusicVoter.SongList.increment_score(MusicVoter.SongList, int)
+    {:noreply, fetch_videos(socket)}
   end
 
-  def handle_event("dec", _value, socket) do
-    {:noreply, update(socket, :val, &(&1 - 1))}
+  def handle_event("dec", id, socket) do
+    {int, string} = Integer.parse(id)
+    MusicVoter.SongList.decrement_score(MusicVoter.SongList, int)
+    {:noreply, fetch_videos(socket)}
   end
 
   def handle_event("add", %{"song" => song}, socket) do
-    MusicVoter.SongList.add(MusicVoter.SongList, %MusicVoter.Song{url: song["url"], score: 1})
+    MusicVoter.SongList.add(MusicVoter.SongList, MusicVoter.Song.new(song["url"]))
 
     {:noreply, fetch_videos(socket)}
   end
