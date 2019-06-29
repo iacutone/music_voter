@@ -5,7 +5,8 @@ defmodule MusicVoter.Song do
     %__MODULE__{
       id: :rand.uniform(10000) + :rand.uniform(500),
       score: 1,
-      url: url
+      url: url,
+      title: MusicVoter.YouTube.title(url),
     }
   end
 end
