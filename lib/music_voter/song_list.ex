@@ -22,7 +22,9 @@ defmodule MusicVoter.SongList do
   end
 
   def view(pid) do
-    GenServer.call(pid, :view)
+    songs = GenServer.call(pid, :view)
+    songs = Enum.sort_by songs, & &1.score
+    Enum.reverse(songs)
   end
 
   def stop(pid) do
