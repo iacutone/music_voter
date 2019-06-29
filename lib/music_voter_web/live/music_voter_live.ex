@@ -7,6 +7,8 @@ defmodule MusicVoterWeb.MusicVoterLive do
   end
 
   def mount(_session, socket) do
+    MusicVoter.SongList.subscribe()
+
     {:ok, fetch_videos(socket)}
   end
 
@@ -25,6 +27,10 @@ defmodule MusicVoterWeb.MusicVoterLive do
   def handle_event("add", %{"song" => song}, socket) do
     MusicVoter.SongList.add(MusicVoter.SongList, MusicVoter.Song.new(song["url"]))
 
+    {:noreply, fetch_videos(socket)}
+  end
+
+  def handle_info({MusicVoter.SongList}, socket) do
     {:noreply, fetch_videos(socket)}
   end
 

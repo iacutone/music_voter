@@ -1,6 +1,8 @@
 defmodule MusicVoter.SongList do
   use GenServer
 
+  @topic inspect(__MODULE__)
+
   # Client
 
   def start_link do
@@ -39,6 +41,7 @@ defmodule MusicVoter.SongList do
     end)
 
 
+    broadcast_change()
     {:noreply, updated_list}
   end
 
@@ -52,11 +55,13 @@ defmodule MusicVoter.SongList do
     end)
 
 
+    broadcast_change()
     {:noreply, updated_list}
   end
 
   def handle_cast(song, list) do
     updated_list = [song | list]
+    broadcast_change()
     {:noreply, updated_list}
   end
 
@@ -67,5 +72,15 @@ defmodule MusicVoter.SongList do
   def init(list) do
     IO.puts "GEN SERVER started"
     {:ok, list}
+  end
+
+  def subscribe do
+    Phoenix.PubSub.subscribe(MusicVoter.PubSub, @topic)
+  end
+
+  defp broadcast_change do
+    Phoenix.PubSub.broadcast(MusicVoter.PubSub, @topic, {__MODULE__})
+
+    :ok
   end
 end
