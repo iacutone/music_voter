@@ -8,7 +8,10 @@ defmodule MusicVoter.YouTube do
 
     %{body: body} = HTTPoison.get!(video)
     decoded = Poison.decode!(body)
-    List.first(decoded["items"])["snippet"]["title"]
+
+    if decoded["pageInfo"]["totalResults"] > 0 do
+      List.first(decoded["items"])["snippet"]["title"]
+    end
   end
 
   defp id(url) do
