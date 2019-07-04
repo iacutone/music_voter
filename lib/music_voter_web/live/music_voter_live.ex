@@ -13,13 +13,13 @@ defmodule MusicVoterWeb.MusicVoterLive do
   end
 
   def handle_event("inc", id, socket) do
-    {int, string} = Integer.parse(id)
+    {int, _string} = Integer.parse(id)
     MusicVoter.SongList.increment_score(MusicVoter.SongList, int)
     {:noreply, fetch_videos(socket)}
   end
 
   def handle_event("dec", id, socket) do
-    {int, string} = Integer.parse(id)
+    {int, _string} = Integer.parse(id)
     MusicVoter.SongList.decrement_score(MusicVoter.SongList, int)
     {:noreply, fetch_videos(socket)}
   end

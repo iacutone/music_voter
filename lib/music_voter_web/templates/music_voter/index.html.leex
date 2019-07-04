@@ -1,11 +1,10 @@
 <div>
   <form action="#" phx-submit="add">
-    <%= text_input :song, :url, placeholder: "Enter a youtube url" %>
+    <%= text_input :song, :url, placeholder: "Enter a YouTube url" %>
     <%= submit "Add", phx_disable_with: "Adding" %>
   </form>
 
   <ol>
-    <%= inspect(@songs) %>
     <%= for song <- @songs do %>
       <li>
         <button phx-click="inc" phx-value=<%= song.id %>>+</button>
