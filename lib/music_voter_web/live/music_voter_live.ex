@@ -18,12 +18,6 @@ defmodule MusicVoterWeb.MusicVoterLive do
     {:noreply, fetch_videos(socket)}
   end
 
-  def handle_event("dec", id, socket) do
-    {int, _string} = Integer.parse(id)
-    MusicVoter.SongList.decrement_score(MusicVoter.SongList, int)
-    {:noreply, fetch_videos(socket)}
-  end
-
   def handle_event("add", %{"song" => song}, socket) do
     song = MusicVoter.SongList, MusicVoter.Song.new(song["url"])
     if song do
