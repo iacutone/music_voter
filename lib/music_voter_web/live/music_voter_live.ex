@@ -19,9 +19,9 @@ defmodule MusicVoterWeb.MusicVoterLive do
   end
 
   def handle_event("add", %{"song" => song}, socket) do
-    song = MusicVoter.SongList, MusicVoter.Song.new(song["url"])
+    song = MusicVoter.Song.new(song["url"])
     if song do
-      MusicVoter.SongList.add(song)
+      MusicVoter.SongList.add(MusicVoter.SongList, song)
     end
 
     {:noreply, fetch_videos(socket)}
