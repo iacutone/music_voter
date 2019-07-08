@@ -8,7 +8,7 @@
     <%= for song <- @songs do %>
       <li>
         <button phx-click="inc" phx-value=<%= song.id %>>+</button>
-        <%= song.title %>
+        <%= link(song.title, to: song.url) %>
         <small>Score: <%= song.score %></small>
       </li>
     <% end %>
