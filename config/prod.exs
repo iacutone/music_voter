@@ -10,7 +10,11 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :music_voter, MusicVoterWeb.Endpoint,
-  url: [host: "example.com", port: 80],
+  url: [scheme: "https", host: "fa-playlist.herokuapp.com", port: 443],
+  check_origin: [
+    "https://fa-playlist.herokuapp.com",
+    "https://www.fa-playlist.herokuapp.com"
+  ],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
