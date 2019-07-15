@@ -1,4 +1,5 @@
 defmodule MusicVoterWeb.MusicVoterLive do
+  require Logger
   use Phoenix.LiveView
   alias MusicVoterWeb.MusicVoterView
 
@@ -32,6 +33,8 @@ defmodule MusicVoterWeb.MusicVoterLive do
   end
 
   defp fetch_videos(socket) do
-    assign(socket, songs: MusicVoter.SongList.view(MusicVoter.SongList))
+    songs = MusicVoter.SongList.view(MusicVoter.SongList)
+    Logger.info(inspect(songs))
+    assign(socket, songs: songs)
   end
 end
