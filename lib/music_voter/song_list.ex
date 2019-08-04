@@ -13,10 +13,6 @@ defmodule MusicVoter.SongList do
     GenServer.cast(pid, {:increment_score, id})
   end
 
-  def decrement_score(pid, id) do
-    GenServer.cast(pid, {:decrement_score, id})
-  end
-
   def add(pid, song) do
     GenServer.cast(pid, song)
   end
@@ -38,20 +34,6 @@ defmodule MusicVoter.SongList do
     updated_list = Enum.map(songs, fn song ->
       if song.id == id do
         %MusicVoter.Song{song | score: song.score + 1}
-      else
-        song
-      end
-    end)
-
-
-    broadcast_change()
-    {:noreply, updated_list}
-  end
-
-  def handle_cast({:decrement_score, id}, songs) do
-    updated_list = Enum.map(songs, fn song ->
-      if song.id == id do
-        %MusicVoter.Song{song | score: song.score - 1}
       else
         song
       end
