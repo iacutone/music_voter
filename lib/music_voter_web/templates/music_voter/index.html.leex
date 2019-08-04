@@ -1,21 +1,26 @@
 <div>
   <form action="#">
-    <input type="text" name="song" phx-keyup="keyup">
+    <input type="text" phx-keyup="keyup">
   </form>
 
-  <ol>
+  <ul>
     <%= for item <- @search do %>
       <li>
+        <form action="#" name="video" phx-submit="add">
+	  <%= hidden_input :song, :vid, value: item["id"]["videoId"] %>
+	  <%= hidden_input :song, :title, value: item["snippet"]["title"] %>
+	  <%= submit "Add Song", phx_disable_with: "Adding" %>
           <%= link(item["snippet"]["title"], to: "https://www.youtube.com/watch?v=#{item["id"]["videoId"]}", target: "_blank") %>
+	</form>
       </li>
     <% end %>
-  </ol>
+  </ul>
 
   <ol>
     <%= for song <- @songs do %>
-      <li>
+      <li id="<%= song.id %>">
         <button phx-click="inc" phx-value=<%= song.id %>>+</button>
-        <%= link(song.title, to: song.url) %>
+        <%= link(song.title, to: song.url, target: "_blank") %>
         <small>Score: <%= song.score %></small>
       </li>
     <% end %>

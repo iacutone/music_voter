@@ -20,8 +20,12 @@ defmodule MusicVoterWeb.MusicVoterLive do
     {:noreply, fetch_videos(socket)}
   end
 
+  def handle_event("add", %{"song" => %{"vid" => vid, "title" => title}}, socket) do
+    song = MusicVoter.Song.new(vid, title)
+    MusicVoter.SongList.add(MusicVoter.SongList, song)
 
-    {:noreply, fetch_videos(socket)}
+    {:noreply, assign(socket, search: [])}
+  end
 
   def handle_event("keyup", query, socket) do
     if String.length(query) < 3 do
