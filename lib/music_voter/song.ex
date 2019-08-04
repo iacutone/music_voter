@@ -1,12 +1,13 @@
 defmodule MusicVoter.Song do
-  defstruct [:id, :score, :title, :url]
+  defstruct [:id, :score, :title, :url, :vid]
 
-  def new(url) do
+  def new(vid, title) do
     %__MODULE__{
       id: :rand.uniform(10000) + :rand.uniform(500),
       score: 1,
-      url: url,
-      title: MusicVoter.YouTube.title(url),
+      url: "https://www.youtube.com/watch?v=#{vid}",
+      vid: vid,
+      title: title,
     }
   end
 end

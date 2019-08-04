@@ -1,28 +1,12 @@
 defmodule MusicVoter.YouTube do
-  def title(url) do
-    id = id(url)
     key = System.get_env("YOUTUBE_API_KEY")
     youtube_v3_url = "https://www.googleapis.com/youtube/v3/"
-    id = "id=" <> id
-    video = "#{youtube_v3_url}videos?part=snippet&#{id}&key=#{key}"
+    query = URI.encode(query)
+    search = "#{youtube_v3_url}search?part=snippet&maxResults=5&q=#{query}&type=video&key=#{key}"
 
-    %{body: body} = HTTPoison.get!(video)
+    %{body: body} = HTTPoison.get!(search)
+    IO.inspect body
     decoded = Poison.decode!(body)
-
-    if decoded["pageInfo"]["totalResults"] > 0 do
-      List.first(decoded["items"])["snippet"]["title"]
-    end
-  end
-
-  defp id(url) do
-    split_url = Regex.split(~r/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/, url)
-
-    case Enum.count(split_url) do
-      1 ->
-        Enum.at(split_url, 0)
-      2 ->
-        Regex.split(~r/[^0-9a-z_\-]/i, Enum.at(split_url, 1))
-        |> Enum.at(0)
-    end
+    decoded["items"]
   end
 end

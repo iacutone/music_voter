@@ -1,8 +1,15 @@
 <div>
-  <form action="#" phx-submit="add">
-    <%= text_input :song, :url, placeholder: "Enter a YouTube url" %>
-    <%= submit "Add", phx_disable_with: "Adding" %>
+  <form action="#">
+    <input type="text" name="song" phx-keyup="keyup">
   </form>
+
+  <ol>
+    <%= for item <- @search do %>
+      <li>
+          <%= link(item["snippet"]["title"], to: "https://www.youtube.com/watch?v=#{item["id"]["videoId"]}", target: "_blank") %>
+      </li>
+    <% end %>
+  </ol>
 
   <ol>
     <%= for song <- @songs do %>
