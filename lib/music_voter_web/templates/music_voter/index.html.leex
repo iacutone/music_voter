@@ -1,4 +1,4 @@
-<div>
+<div id="container">
   <form action="#">
     <input type="text" phx-keyup="keyup">
   </form>
@@ -16,13 +16,64 @@
     <% end %>
   </ul>
 
-  <ol>
+  <ol class="song-list">
     <%= for song <- @songs do %>
-      <li id="<%= song.id %>">
+      <li id="<%= song.vid %>">
         <button phx-click="inc" phx-value=<%= song.id %>>+</button>
         <%= link(song.title, to: song.url, target: "_blank") %>
         <small>Score: <%= song.score %></small>
       </li>
     <% end %>
   </ol>
+
+  <div id="player"></div>
 </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function(){ 
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }, false);
+
+  const songList = document.querySelector('ol');
+  
+  songList.addEventListener('click', event => {
+    removeFrame();
+    var closestLi = event.target.closest('li');
+
+    onYouTubeIframeAPIReady(closestLi.id);
+  });
+
+  function removeFrame() {
+    var player = document.getElementById('player');
+    player.remove();
+    var container = document.getElementById('container');
+    var node = document.createElement("div");
+    node.setAttribute("id", "player");
+    container.appendChild(node);
+  }
+
+  function onYouTubeIframeAPIReady(vid) {
+    if (vid) {
+      new YT.Player('player', {
+        height: '500',
+        width: '500',
+        videoId: vid,
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+  }
+
+  function onPlayerReady(event) {
+    event.target.playVideo();
+  }
+
+  function onPlayerStateChange(event) {
+  }
+</script>
