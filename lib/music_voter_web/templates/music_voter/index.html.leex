@@ -20,6 +20,7 @@
     <%= for song <- @songs do %>
       <li id="<%= song.vid %>">
         <button phx-click="inc" phx-value=<%= song.id %>>+</button>
+	<button class="play-song">Play</button>
         <%= link(song.title, to: song.url, target: "_blank") %>
         <small>Score: <%= song.score %></small>
       </li>
@@ -38,15 +39,37 @@
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }, false);
 
-  const songList = document.querySelector('ol');
+  const songs = document.getElementsByClassName('play-song');
+  for (var i = 0; i < songs.length; i++) {
+    songs[i].addEventListener('click', event => {
+      var closestLi = event.target.closest('li');
+
+      console.log(event.target.textContent)
+      if (event.target.textContent === "Play") {
+        removeFrame();
+        onYouTubeIframeAPIReady(closestLi.id);
+      } else {
+        removeFrame();
+      }
+
+      togglePlay(songs, event);
+    });
+  }
+
+  function togglePlay(songs, event) {
+    for (var i = 0; i < songs.length; i++) {
+      if (songs[i] === event.target) {
+        if (event.target.textContent === "Play") {
+          event.target.textContent = "Stop"
+	} else {
+          event.target.textContent = "Play"
+	}
+      } else {
+        songs[i].textContent = "Play"
+      }
+    }
+  }
   
-  songList.addEventListener('click', event => {
-    removeFrame();
-    var closestLi = event.target.closest('li');
-
-    onYouTubeIframeAPIReady(closestLi.id);
-  });
-
   function removeFrame() {
     var player = document.getElementById('player');
     player.remove();
@@ -59,8 +82,8 @@
   function onYouTubeIframeAPIReady(vid) {
     if (vid) {
       new YT.Player('player', {
-        height: '500',
-        width: '500',
+        height: '0',
+        width: '0',
         videoId: vid,
         events: {
           'onReady': onPlayerReady,
