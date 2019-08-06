@@ -30,7 +30,6 @@
   <div id="player"></div>
 </div>
 
-
 <script>
   document.addEventListener("phx:update", function(event) {
     const songs = document.getElementsByClassName('play-song');
@@ -100,5 +99,12 @@
   }
 
   function onPlayerStateChange(event) {
+    if (event.target.getPlayerState() === 0) {
+      const songs = document.getElementsByClassName('play-song');
+      for (var i = 0; i < songs.length; i++) {
+        songs[i].textContent = "Play"
+        removeFrame();
+      }
+    }
   }
 </script>
