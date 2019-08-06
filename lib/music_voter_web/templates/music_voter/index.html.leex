@@ -32,29 +32,31 @@
 
 
 <script>
+  document.addEventListener("phx:update", function(event) {
+    const songs = document.getElementsByClassName('play-song');
+    for (var i = 0; i < songs.length; i++) {
+      songs[i].addEventListener('click', event => {
+        var closestLi = event.target.closest('li');
+
+        if (event.target.textContent === "Play") {
+          removeFrame();
+          onYouTubeIframeAPIReady(closestLi.id);
+        } else {
+          removeFrame();
+        }
+
+        togglePlay(songs, event);
+      });
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', function(){ 
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
   }, false);
-
-  const songs = document.getElementsByClassName('play-song');
-  for (var i = 0; i < songs.length; i++) {
-    songs[i].addEventListener('click', event => {
-      var closestLi = event.target.closest('li');
-
-      console.log(event.target.textContent)
-      if (event.target.textContent === "Play") {
-        removeFrame();
-        onYouTubeIframeAPIReady(closestLi.id);
-      } else {
-        removeFrame();
-      }
-
-      togglePlay(songs, event);
-    });
-  }
 
   function togglePlay(songs, event) {
     for (var i = 0; i < songs.length; i++) {
