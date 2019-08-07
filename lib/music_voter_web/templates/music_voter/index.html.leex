@@ -18,9 +18,9 @@
 
   <ol class="song-list">
     <%= for song <- @songs do %>
-      <li id="<%= song.vid %>">
+      <li>
         <button phx-click="inc" phx-value=<%= song.id %>>+</button>
-	<button class="play-song">Play</button>
+	<button id="<%= song.vid %>" class="play-song">Play</button>
         <%= link(song.title, to: song.url, target: "_blank") %>
         <small>Score: <%= song.score %></small>
       </li>
@@ -35,16 +35,19 @@
     const songs = document.getElementsByClassName('play-song');
     for (var i = 0; i < songs.length; i++) {
       songs[i].addEventListener('click', event => {
-        var closestLi = event.target.closest('li');
+        if (event) {
+          var closestLi = event.target.closest('li');
+	  var vid = closestLi.children[1].id
 
-        if (event.target.textContent === "Play") {
-          removeFrame();
-          onYouTubeIframeAPIReady(closestLi.id);
-        } else {
-          removeFrame();
-        }
+          if (event.target.textContent === "Play") {
+            removeFrame();
+            onYouTubeIframeAPIReady(vid);
+          } else {
+            removeFrame();
+          }
 
-        togglePlay(songs, event);
+          togglePlay(songs, event);
+	}
       });
     }
   });
