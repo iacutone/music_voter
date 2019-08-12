@@ -18,5 +18,9 @@ defmodule MusicVoterWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    resources "/sessions", SessionController,
+      only: [:new, :create], 
+      singleton: true
   end
 end

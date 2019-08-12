@@ -7,11 +7,11 @@ defmodule MusicVoterWeb.MusicVoterLive do
     MusicVoterView.render("index.html", assigns)
   end
 
-  def mount(_session, socket) do
+  def mount(session, socket) do
     MusicVoter.SongList.subscribe()
     songs = MusicVoter.SongList.view(MusicVoter.SongList)
 
-    {:ok, assign(socket, songs: songs, search: [])}
+    {:ok, assign(socket, songs: songs, search: [], user: session.user)}
   end
 
   def handle_event("inc", id, socket) do
