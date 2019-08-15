@@ -9,15 +9,15 @@ defmodule MusicVoter.SongList do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def increment_score(pid, id) do
-    GenServer.cast(pid, {:increment_score, id})
+  def increment_score(pid, id, socket) do
+    GenServer.cast(pid, {:increment_score, id, socket})
   end
 
   def add(pid, song) do
     GenServer.cast(pid, song)
   end
 
-  def view(pid) do
+  def songs(pid) do
     songs = GenServer.call(pid, :view)
     songs = Enum.sort_by songs, & &1.score
     songs = Enum.filter(songs, fn song -> song.title != nil end)
@@ -30,7 +30,7 @@ defmodule MusicVoter.SongList do
 
   # Server
 
-  def handle_cast({:increment_score, id}, songs) do
+  def handle_cast({:increment_score, id, socket}, songs) do
     updated_list = Enum.map(songs, fn song ->
       if song.id == id do
         %MusicVoter.Song{song | score: song.score + 1}

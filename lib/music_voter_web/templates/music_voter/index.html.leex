@@ -1,3 +1,5 @@
+Welcome <%= @user.name %>, you have <%= @user.votes %> remaining votes.
+
 <div id="container">
   <form action="#">
     <input type="text" phx-keyup="keyup" placeholder="Search for a song">
@@ -19,7 +21,9 @@
   <ol class="song-list">
     <%= for song <- @songs do %>
       <li>
-        <button phx-click="inc" phx-value=<%= song.id %>>+</button>
+        <%= if @user.votes > 0 do %>
+	  <button phx-click="inc" phx-value=<%= song.id %>>+</button>
+	<% end %>
 	<button id="<%= song.vid %>" class="play-song">Play</button>
         <%= link(song.title, to: song.url, target: "_blank") %>
         <small>Score: <%= song.score %></small>
