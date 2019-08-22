@@ -27,10 +27,26 @@ Welcome <%= @user.name %>, you have <%= @user.votes %> remaining votes.
 	<button id="<%= song.vid %>" class="play-song">Play</button>
         <%= link(song.title, to: song.url, target: "_blank") %>
         <small>Score: <%= song.score %></small>
+        <form action="#" name="video" phx-submit="comment">
+	  <%= hidden_input :song, :id, value: song.id %>
+	  <%= text_input :song, :comment, placeholder: "Comment" %>
+	  <%= submit "Add", phx_disable_with: "Adding" %>
+	</form>
+	<%= Enum.map(song.comments, fn(comment) -> %>
+	  <p><%= comment.user %> says: <%= comment.text %><br></p>
+	<% end) %>
       </li>
     <% end %>
   </ol>
 
+  <div>
+    <h2>Present Users</h2>
+    <ul>
+      <%= for user <- @users do %>
+        <li><%= user.name %></li>
+      <% end %>
+    </ul>
+  </div>
   <div id="player"></div>
 </div>
 
