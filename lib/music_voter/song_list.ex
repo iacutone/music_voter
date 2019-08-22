@@ -17,6 +17,10 @@ defmodule MusicVoter.SongList do
     GenServer.cast(pid, song)
   end
 
+  def add_comment(pid, id, comment, socket) do
+    GenServer.cast(pid, {:add_comment, id, comment, socket})
+  end
+
   def songs(pid) do
     songs = GenServer.call(pid, :view)
     songs = Enum.sort_by songs, & &1.score
@@ -39,6 +43,18 @@ defmodule MusicVoter.SongList do
       end
     end)
 
+    broadcast_change()
+    {:noreply, updated_list}
+  end
+
+  def handle_cast({:add_comment, id, comment, socket}, songs) do
+    updated_list = Enum.map(songs, fn song ->
+      if song.id == id do
+        %MusicVoter.Song{song | comments: [comment | song.comments]}
+      else
+        song
+      end
+    end)
 
     broadcast_change()
     {:noreply, updated_list}

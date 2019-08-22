@@ -12,7 +12,8 @@ defmodule MusicVoter.Application do
       %{
         id: MusicVoter.SongList,
         start: {MusicVoter.SongList, :start_link, []}
-      }
+      },
+      MusicVoterWeb.Presence
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
