@@ -47,30 +47,33 @@ Welcome <%= @user.name %>, you have <%= @user.votes %> remaining votes.
       <% end %>
     </ul>
   </div>
+
   <div id="player"></div>
 </div>
 
 <script>
   document.addEventListener("phx:update", function(event) {
-    const songs = document.getElementsByClassName('play-song');
-    for (var i = 0; i < songs.length; i++) {
-      songs[i].addEventListener('click', event => {
-        if (event) {
-          var closestLi = event.target.closest('li');
-	  var vid = closestLi.children[1].id
-
-          if (event.target.textContent === "Play") {
-            removeFrame();
-            onYouTubeIframeAPIReady(vid);
-          } else {
-            removeFrame();
-          }
-
-          togglePlay(songs, event);
-	}
-      });
-    }
+    console.log(event);
   });
+
+  const songs = document.getElementsByClassName('play-song');
+  for (var i = 0; i < songs.length; i++) {
+    songs[i].addEventListener('click', event => {
+      if (event) {
+        var closestLi = event.target.closest('li');
+        var vid = closestLi.children[1].id
+
+        if (event.target.textContent === "Play") {
+          removeFrame();
+          onYouTubeIframeAPIReady(vid);
+        } else {
+          removeFrame();
+        }
+
+        togglePlay(songs, event);
+      }
+    });
+  }
 
   document.addEventListener('DOMContentLoaded', function(){ 
     var tag = document.createElement('script');
