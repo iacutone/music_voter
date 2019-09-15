@@ -40,12 +40,16 @@ defmodule MusicVoterWeb.MusicVoterLive do
     {:noreply, assign(socket, search: [])}
   end
 
-  def handle_event("keyup", query, socket) do
-    if String.length(query) < 3 do
-      {:noreply, assign(socket, search: [])}
-    else
-      {:noreply, assign(socket, search: MusicVoter.YouTube.search(query))}
-    end
+  def handle_event("search", %{"search" => %{"query" => ""}}, socket) do
+    {:noreply, socket}
+  end
+
+  def handle_event("search", %{"search" => %{"query" => query}}, socket) do
+    {:noreply, assign(socket, search: MusicVoter.YouTube.search(query))}
+  end
+
+  def handle_event("comment", %{"song" => %{"id" => id, "comment" => ""}}, socket) do
+    {:noreply, socket}
   end
 
   def handle_event("comment", %{"song" => %{"id" => id, "comment" => comment}}, socket) do
