@@ -1,8 +1,9 @@
 Welcome <%= @user.name %>, you have <%= @user.votes %> remaining votes.
 
 <div id="container">
-  <form action="#">
-    <input type="text" phx-keyup="keyup" placeholder="Search for a song">
+  <form action="#" phx-submit="search">
+    <%= text_input :search, :query, placeholder: "Search for a song" %>
+    <%= submit "Search", phx_disable_with: "Searching..." %>
   </form>
 
   <ul>
@@ -10,9 +11,9 @@ Welcome <%= @user.name %>, you have <%= @user.votes %> remaining votes.
       <li>
         <form action="#" name="video" phx-submit="add">
 	  <%= hidden_input :song, :vid, value: item["id"]["videoId"] %>
-	  <%= hidden_input :song, :title, value: item["snippet"]["title"] %>
+	  <%= hidden_input :song, :title, value: HtmlEntities.decode(item["snippet"]["title"]) %>
 	  <%= submit "Add Song", phx_disable_with: "Adding" %>
-          <%= link(item["snippet"]["title"], to: "https://www.youtube.com/watch?v=#{item["id"]["videoId"]}", target: "_blank") %>
+          <%= link(HtmlEntities.decode(item["snippet"]["title"]), to: "https://www.youtube.com/watch?v=#{item["id"]["videoId"]}", target: "_blank") %>
 	</form>
       </li>
     <% end %>

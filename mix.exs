@@ -41,7 +41,8 @@ defmodule MusicVoter.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
       {:httpoison, "~> 1.5.1"},
-      {:poison, "~> 4.0.1"}
+      {:poison, "~> 4.0.1"},
+      {:html_entities, "~> 0.4"}
     ]
   end
 end
