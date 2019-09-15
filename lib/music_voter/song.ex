@@ -1,5 +1,5 @@
 defmodule MusicVoter.Song do
-  defstruct [:id, :score, :title, :url, :vid, :comments]
+  defstruct [:id, :score, :title, :url, :vid, :comments, :votes]
 
   def new(vid, title) do
     %__MODULE__{
@@ -8,7 +8,8 @@ defmodule MusicVoter.Song do
       url: "https://www.youtube.com/watch?v=#{vid}",
       vid: vid,
       title: title,
-      comments: []
+      comments: [],
+      votes: []
     }
   end
 end

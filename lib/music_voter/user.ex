@@ -1,8 +1,8 @@
 defmodule MusicVoter.User do
 
   
-  @enforce_keys [:name, :votes]
-  defstruct [:name, :votes]
+  @enforce_keys [:name]
+  defstruct [:name, :id]
 
   @doc """
   Creates a user with the given `name`
@@ -10,7 +10,7 @@ defmodule MusicVoter.User do
   def new(name) do
     %__MODULE__{
       name: name,
-      votes: 10
+      id: :rand.uniform(10000) + :rand.uniform(500),
     }
   end
 end
