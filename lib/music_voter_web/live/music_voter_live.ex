@@ -29,8 +29,7 @@ defmodule MusicVoterWeb.MusicVoterLive do
     MusicVoter.SongList.increment_score(MusicVoter.SongList, int, socket)
 
     songs = MusicVoter.SongList.songs(MusicVoter.SongList)
-    user = %MusicVoter.User{socket.assigns.user | votes: socket.assigns.user.votes - 1}
-    {:noreply, assign(socket, songs: songs, user: user)}
+    {:noreply, assign(socket, songs: songs)}
   end
 
   def handle_event("add", %{"song" => %{"vid" => vid, "title" => title}}, socket) do

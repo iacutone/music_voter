@@ -37,7 +37,7 @@ defmodule MusicVoter.SongList do
   def handle_cast({:increment_score, id, socket}, songs) do
     updated_list = Enum.map(songs, fn song ->
       if song.id == id do
-        %MusicVoter.Song{song | score: song.score + 1}
+        %MusicVoter.Song{song | score: song.score + 1, votes: [socket.assigns.user.id | song.votes]}
       else
         song
       end

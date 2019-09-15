@@ -1,4 +1,4 @@
-Welcome <%= @user.name %>, you have <%= @user.votes %> remaining votes.
+Welcome <%= @user.name %>
 
 <div id="container">
   <form action="#" phx-submit="search">
@@ -22,7 +22,7 @@ Welcome <%= @user.name %>, you have <%= @user.votes %> remaining votes.
   <ol class="song-list">
     <%= for song <- @songs do %>
       <li>
-        <%= if @user.votes > 0 do %>
+        <%= unless Enum.member?(song.votes, @user.id) do %>
 	  <button phx-click="inc" phx-value=<%= song.id %>>+</button>
 	<% end %>
 	<button id="<%= song.vid %>" class="play-song">Play</button>
