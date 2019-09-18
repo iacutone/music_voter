@@ -13,8 +13,8 @@ defmodule MusicVoter.SongList do
     GenServer.cast(pid, {:increment_score, id, socket})
   end
 
-  def add(pid, song) do
-    GenServer.cast(pid, song)
+  def add_song(pid, song, socket) do
+    GenServer.cast(pid, {:add_song, song, socket})
   end
 
   def add_comment(pid, id, comment, socket) do
@@ -60,8 +60,14 @@ defmodule MusicVoter.SongList do
     {:noreply, updated_list}
   end
 
-  def handle_cast(song, list) do
-    updated_list = [song | list]
+  def handle_cast({:add_song, song, socket}, songs) do
+    if System.get_env("SLACK_WEBHOOK") do
+      name = socket.assigns.user.name
+      msg = "#{name} added: #{song.title} \n #{song.url}"
+      MusicVoter.Slack.send_msg(msg)
+    end
+
+    updated_list = [song | songs]
     broadcast_change()
     {:noreply, updated_list}
   end
