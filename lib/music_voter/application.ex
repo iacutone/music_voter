@@ -4,16 +4,15 @@ defmodule MusicVoter.Application do
   @moduledoc false
 
   use Application
+  import Supervisor.Spec
 
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      MusicVoterWeb.Endpoint,
-      %{
-        id: MusicVoter.SongList,
-        start: {MusicVoter.SongList, :start_link, []}
-      },
-      MusicVoterWeb.Presence
+      supervisor(MusicVoterWeb.Endpoint, []),
+      supervisor(MusicVoter.SongList, []),
+      supervisor(MusicVoter.SongTracker, []),
+      supervisor(MusicVoterWeb.Presence, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

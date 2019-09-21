@@ -1,5 +1,4 @@
 defmodule MusicVoterWeb.MusicVoterLive do
-  require Logger
   use Phoenix.LiveView
   alias MusicVoterWeb.MusicVoterView
   alias MusicVoterWeb.Presence
@@ -21,7 +20,26 @@ defmodule MusicVoterWeb.MusicVoterLive do
       }
     )
 
-    {:ok, assign(socket, songs: songs, search: [], user: session.user, auth_token: session.auth_token, users: [])}
+    {:ok, assign(socket, songs: songs, search: [], user: session.user, auth_token: session.auth_token, users: [], song_playing_vid: nil)}
+  end
+
+  def handle_event("play", _, socket) do
+    vid = MusicVoter.SongTracker.play(MusicVoter.SongTracker, socket)
+    {:noreply, assign(socket, song_playing_vid: vid)}
+  end
+
+  def handle_event("stop", _, socket) do
+    {:noreply, assign(socket, song_playing_vid: nil)}
+  end
+
+  def handle_event("next", vid, socket) do
+    vid = MusicVoter.SongTracker.next(MusicVoter.SongTracker, socket, vid)
+    {:noreply, assign(socket, song_playing_vid: vid)}
+  end
+
+  def handle_event("previous", vid, socket) do
+    vid = MusicVoter.SongTracker.previous(MusicVoter.SongTracker, socket, vid)
+    {:noreply, assign(socket, song_playing_vid: vid)}
   end
 
   def handle_event("inc", id, socket) do
@@ -76,7 +94,6 @@ defmodule MusicVoterWeb.MusicVoterLive do
 
   defp fetch_videos(socket) do
     songs = MusicVoter.SongList.songs(MusicVoter.SongList)
-    Logger.info(inspect(songs))
     assign(socket, songs: songs)
   end
 

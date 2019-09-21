@@ -24,12 +24,7 @@ defmodule MusicVoter.SongList do
   def songs(pid) do
     songs = GenServer.call(pid, :view)
     songs = Enum.sort_by songs, & &1.score
-    songs = Enum.filter(songs, fn song -> song.title != nil end)
     Enum.reverse(songs)
-  end
-
-  def stop(pid) do
-    GenServer.stop(pid, :normal, :infinity) # default values
   end
 
   # Server

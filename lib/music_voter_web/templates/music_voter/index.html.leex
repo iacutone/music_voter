@@ -21,11 +21,14 @@ Welcome <%= @user.name %>
 
   <ol class="song-list">
     <%= for song <- @songs do %>
-      <li>
+      <%= if song.vid == @song_playing_vid do %>
+        <li class="active song">
+      <% else %>
+        <li class="song">
+      <% end %>
         <%= unless Enum.member?(song.votes, @user.id) do %>
 	  <button phx-click="inc" phx-value=<%= song.id %>>+</button>
 	<% end %>
-	<button id="<%= song.vid %>" class="play-song">Play</button>
         <%= link(song.title, to: song.url, target: "_blank") %>
         <small>Score: <%= song.score %></small>
         <form action="#" name="video" phx-submit="comment">
@@ -49,89 +52,37 @@ Welcome <%= @user.name %>
     </ul>
   </div>
 
-  <div id="player"></div>
+  <%= if @song_playing_vid do %>
+     <iframe id="ytplayer" 
+             type="text/html" 
+             width="640" 
+             height="360"
+             src="https://www.youtube.com/embed/<%= @song_playing_vid %>?autoplay=1"
+             frameborder="0">
+     </iframe>
+  <% end %>
+
+  <footer id='controls' data-vid=<%= @song_playing_vid %>>
+    <%= if Enum.count(@songs) > 1 do %>
+      <button phx-click="previous" phx-value=<%= @song_playing_vid %>>Previous</button>
+    <% end %>
+      <%= if Enum.count(@songs) > 0 && !@song_playing_vid do %>
+        <button phx-click="play">Play</button>
+      <% else %>
+        <button phx-click="stop">Stop</button>
+      <% end %>
+    <%= if Enum.count(@songs) > 1 do %>
+      <button phx-click="next" phx-value=<%= @song_playing_vid %>>Next</button>
+    <% end %>
+  </footer>
 </div>
 
-<script>
-  document.addEventListener("phx:update", function(event) {
-    console.log(event);
-  });
-
-  const songs = document.getElementsByClassName('play-song');
-  for (var i = 0; i < songs.length; i++) {
-    songs[i].addEventListener('click', event => {
-      if (event) {
-        var closestLi = event.target.closest('li');
-        var vid = closestLi.children[1].id
-
-        if (event.target.textContent === "Play") {
-          removeFrame();
-          onYouTubeIframeAPIReady(vid);
-        } else {
-          removeFrame();
-        }
-
-        togglePlay(songs, event);
-      }
-    });
+<style>
+  .song {
+    padding: 5px;
   }
 
-  document.addEventListener('DOMContentLoaded', function(){ 
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  }, false);
-
-  function togglePlay(songs, event) {
-    for (var i = 0; i < songs.length; i++) {
-      if (songs[i] === event.target) {
-        if (event.target.textContent === "Play") {
-          event.target.textContent = "Stop"
-	} else {
-          event.target.textContent = "Play"
-	}
-      } else {
-        songs[i].textContent = "Play"
-      }
-    }
+  .active {
+    background: #CFDEE6;
   }
-  
-  function removeFrame() {
-    var player = document.getElementById('player');
-    player.remove();
-    var container = document.getElementById('container');
-    var node = document.createElement("div");
-    node.setAttribute("id", "player");
-    container.appendChild(node);
-  }
-
-  function onYouTubeIframeAPIReady(vid) {
-    if (vid) {
-      new YT.Player('player', {
-        height: '0',
-        width: '0',
-        videoId: vid,
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-  }
-
-  function onPlayerReady(event) {
-    event.target.playVideo();
-  }
-
-  function onPlayerStateChange(event) {
-    if (event.target.getPlayerState() === 0) {
-      const songs = document.getElementsByClassName('play-song');
-      for (var i = 0; i < songs.length; i++) {
-        songs[i].textContent = "Play"
-        removeFrame();
-      }
-    }
-  }
-</script>
+</style>
