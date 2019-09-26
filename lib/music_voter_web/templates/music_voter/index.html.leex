@@ -66,10 +66,12 @@ Welcome <%= @user.name %>
     <%= if Enum.count(@songs) > 1 do %>
       <button phx-click="previous" phx-value=<%= @song_playing_vid %>>Previous</button>
     <% end %>
-      <%= if Enum.count(@songs) > 0 && !@song_playing_vid do %>
+      <%= cond do %>
+      <% Enum.count(@songs) > 0 && !@song_playing_vid -> %>
         <button phx-click="play">Play</button>
-      <% else %>
+      <% Enum.count(@songs) > 0 -> %>
         <button phx-click="stop">Stop</button>
+      <% true -> %>
       <% end %>
     <%= if Enum.count(@songs) > 1 do %>
       <button phx-click="next" phx-value=<%= @song_playing_vid %>>Next</button>
