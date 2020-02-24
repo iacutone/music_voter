@@ -1,5 +1,6 @@
 defmodule MusicVoterWeb.Router do
   use MusicVoterWeb, :router
+  use Honeybadger.Plug
 
   pipeline :browser do
     plug :accepts, ["html"]
