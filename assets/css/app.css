@@ -1,4 +1,9 @@
 /* This file is for your main application css. */
 
+footer button {
+  margin-right: 10px;
+}
+
 @import "./phoenix.css";
 @import "../../deps/phoenix_live_view/assets/css/live_view.css"
+

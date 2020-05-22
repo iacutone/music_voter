@@ -62,21 +62,7 @@ Welcome <%= @user.name %>
      </iframe>
   <% end %>
 
-  <footer id='controls' data-vid=<%= @song_playing_vid %>>
-    <%= if Enum.count(@songs) > 1 do %>
-      <button phx-click="previous" phx-value=<%= @song_playing_vid %>>Previous</button>
-    <% end %>
-      <%= cond do %>
-      <% Enum.count(@songs) > 0 && !@song_playing_vid -> %>
-        <button phx-click="play">Play</button>
-      <% Enum.count(@songs) > 0 -> %>
-        <button phx-click="stop">Stop</button>
-      <% true -> %>
-      <% end %>
-    <%= if Enum.count(@songs) > 1 do %>
-      <button phx-click="next" phx-value=<%= @song_playing_vid %>>Next</button>
-    <% end %>
-  </footer>
+  <%= render_controls(@songs, @song_playing_vid) %>
 </div>
 
 <style>
