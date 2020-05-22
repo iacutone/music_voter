@@ -19,7 +19,7 @@ defmodule MusicVoter.MixProject do
   def application do
     [
       mod: {MusicVoter.Application, []},
-      extra_applications: [:logger, :runtime_tools, :httpoison, :honeybadger]
+      extra_applications: [:logger, :runtime_tools, :httpoison]
     ]
   end
 
@@ -42,8 +42,7 @@ defmodule MusicVoter.MixProject do
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
       {:httpoison, "~> 1.5.1"},
       {:poison, "~> 4.0.1"},
-      {:html_entities, "~> 0.4"},
-      {:honeybadger, "~> 0.7"}
+      {:html_entities, "~> 0.4"}
     ]
   end
 end
