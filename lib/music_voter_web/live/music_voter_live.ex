@@ -20,7 +20,14 @@ defmodule MusicVoterWeb.MusicVoterLive do
       }
     )
 
-    {:ok, assign(socket, songs: songs, search: [], user: session.user, auth_token: session.auth_token, users: [], song_playing_vid: nil)}
+    {:ok, assign(socket, 
+      songs: songs, 
+      search: [], 
+      user: session.user, 
+      auth_token: session.auth_token, 
+      users: [], 
+      song_playing_vid: nil)
+    }
   end
 
   def handle_event("play", _, socket) do
@@ -65,7 +72,7 @@ defmodule MusicVoterWeb.MusicVoterLive do
     {:noreply, assign(socket, search: MusicVoter.YouTube.search(query))}
   end
 
-  def handle_event("comment", %{"song" => %{"id" => id, "comment" => ""}}, socket) do
+  def handle_event("comment", %{"song" => %{"id" => _id, "comment" => ""}}, socket) do
     {:noreply, socket}
   end
 
@@ -78,10 +85,6 @@ defmodule MusicVoterWeb.MusicVoterLive do
     {:noreply, assign(socket, songs: songs)}
   end
 
-  def handle_info({MusicVoter.SongList}, socket) do
-    {:noreply, fetch_videos(socket)}
-  end
-
   def handle_info(%{event: "presence_diff"}, socket) do
     users =   
       Presence.list("room:")
@@ -92,9 +95,12 @@ defmodule MusicVoterWeb.MusicVoterLive do
     {:noreply, assign(socket, users: users)}
   end
 
+  def handle_info({MusicVoter.SongList}, socket) do
+    {:noreply, fetch_videos(socket)}
+  end
+
   defp fetch_videos(socket) do
     songs = MusicVoter.SongList.songs(MusicVoter.SongList)
     assign(socket, songs: songs)
   end
-
 end

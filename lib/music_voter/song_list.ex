@@ -72,7 +72,6 @@ defmodule MusicVoter.SongList do
   end
 
   def init(list) do
-    IO.puts "GEN SERVER started"
     {:ok, list}
   end
 

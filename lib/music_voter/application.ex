@@ -10,9 +10,9 @@ defmodule MusicVoter.Application do
     # List all child processes to be supervised
     children = [
       supervisor(MusicVoterWeb.Endpoint, []),
+      supervisor(MusicVoterWeb.Presence, []),
       supervisor(MusicVoter.SongList, []),
-      supervisor(MusicVoter.SongTracker, []),
-      supervisor(MusicVoterWeb.Presence, [])
+      supervisor(MusicVoter.SongTracker, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

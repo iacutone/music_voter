@@ -53,7 +53,6 @@ defmodule MusicVoter.SongTracker do
   end
 
   def init(_) do
-    IO.puts "GEN SERVER started, horrrray"
     {:ok, ""}
   end
 
