@@ -5,14 +5,14 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
 # Configures the endpoint
 config :music_voter, MusicVoterWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "pSIGJw4YD7MIm8EBD0vvJ8StWmSk+IRbBqB87k79qkYynMJFXNQdnBjl+G/15g1Z",
   render_errors: [view: MusicVoterWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: MusicVoter.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: MusicVoter.PubSub,
   live_view: [signing_salt: "5EapYe9WpWIhqErxbkbSlFZry1+gKiqP"]
 
 # Configures Elixir's Logger

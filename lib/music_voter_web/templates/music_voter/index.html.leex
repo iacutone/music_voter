@@ -1,8 +1,9 @@
 Welcome <%= @user.name %>
 
 <div id="container">
+  <% f = form_for :search, "#" %>
   <form action="#" phx-submit="search">
-    <%= text_input :search, :query, placeholder: "Search for a song" %>
+    <%= text_input f, :query, placeholder: "Search for a song" %>
     <%= submit "Search", phx_disable_with: "Searching..." %>
   </form>
 
@@ -27,7 +28,7 @@ Welcome <%= @user.name %>
         <li class="song">
       <% end %>
         <%= unless Enum.member?(song.votes, @user.id) do %>
-	  <button phx-click="inc" phx-value=<%= song.id %>>+</button>
+	  <button phx-click="inc" phx-value-song=<%= song.id %>>+</button>
 	<% end %>
         <%= link(song.title, to: song.url, target: "_blank") %>
         <small>Score: <%= song.score %></small>
@@ -74,3 +75,4 @@ Welcome <%= @user.name %>
     background: #CFDEE6;
   }
 </style>
+

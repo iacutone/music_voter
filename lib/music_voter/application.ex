@@ -9,8 +9,9 @@ defmodule MusicVoter.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
+      {Phoenix.PubSub, name: MusicVoter.PubSub},
+      MusicVoterWeb.Presence,
       supervisor(MusicVoterWeb.Endpoint, []),
-      supervisor(MusicVoterWeb.Presence, []),
       supervisor(MusicVoter.SongList, []),
       supervisor(MusicVoter.SongTracker, [])
     ]

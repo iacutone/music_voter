@@ -1,3 +1,3 @@
 <h1>Music Voter</h1>
 
-<%= live_render(@conn, MusicVoterWeb.MusicVoterLive, session: %{user: @user, auth_token: @auth_token}) %>
+<%= live_render(@conn, MusicVoterWeb.MusicVoterLive, session: %{"user" => @user, "auth_token" => @auth_token}) %>
