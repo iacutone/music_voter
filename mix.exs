@@ -9,6 +9,7 @@ defmodule MusicVoter.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -31,18 +32,34 @@ defmodule MusicVoter.MixProject do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [
+    [    
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
       {:phoenix, "~> 1.6.11"},
-      {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_html, "~> 3.1"},
+      {:phoenix_live_dashboard, "~> 0.5"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_view, "~> 0.17.11"},
+      {:phoenix_pubsub, "~> 2.0"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:phoenix_live_view, "~> 0.17.11"},
       {:httpoison, "~> 1.5.1"},
       {:poison, "~> 4.0.1"},
       {:html_entities, "~> 0.4"}
+    ]
+  end
+
+  # Aliases are shortcuts or tasks specific to the current project.
+  # For example, to install project dependencies and perform other setup tasks, run:
+  #
+  #     $ mix setup
+  #
+  # See the documentation for `Mix` for more info on aliases.
+  defp aliases do
+    [
+      "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end
 end

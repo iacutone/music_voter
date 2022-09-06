@@ -10,10 +10,10 @@ import Config
 # Configures the endpoint
 config :music_voter, MusicVoterWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "pSIGJw4YD7MIm8EBD0vvJ8StWmSk+IRbBqB87k79qkYynMJFXNQdnBjl+G/15g1Z",
-  render_errors: [view: MusicVoterWeb.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: HelloWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: MusicVoter.PubSub,
-  live_view: [signing_salt: "5EapYe9WpWIhqErxbkbSlFZry1+gKiqP"]
+  pubsub_server: Hello.PubSub,
+  live_view: [signing_salt: "8fRjwjqz"]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -25,6 +25,14 @@ config :phoenix, :json_library, Jason
 
 # Render leex files with LiveView Engine
 config :phoenix, template_engines: [leex: Phoenix.LiveView.Engine]
+
+config :esbuild,
+  version: "0.12.18",
+  default: [
+    args: ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
