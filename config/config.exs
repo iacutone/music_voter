@@ -12,7 +12,6 @@ config :music_voter, MusicVoterWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: HelloWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: MusicVoter.PubSub,
-  pubsub_server: Hello.PubSub,
   live_view: [signing_salt: "8fRjwjqz"]
 
 # Configures Elixir's Logger
