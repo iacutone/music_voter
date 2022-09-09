@@ -10,7 +10,7 @@ import Config
 # Configures the endpoint
 config :music_voter, MusicVoterWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: HelloWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [view: MusicVoterWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: MusicVoter.PubSub,
   live_view: [signing_salt: "8fRjwjqz"]
 
