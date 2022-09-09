@@ -1,5 +1,6 @@
 defmodule MusicVoterWeb.Router do
   use MusicVoterWeb, :router
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -16,6 +17,7 @@ defmodule MusicVoterWeb.Router do
 
   scope "/", MusicVoterWeb do
     pipe_through :browser
+    live_dashboard "/dashboard"
 
     get "/", PageController, :index
 
