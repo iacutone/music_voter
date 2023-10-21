@@ -5,9 +5,9 @@ defmodule MusicVoter.MixProject do
     [
       app: :music_voter,
       version: "0.1.0",
-      elixir: "~> 1.13.4",
+      elixir: "~> 1.14.2",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -34,12 +34,13 @@ defmodule MusicVoter.MixProject do
   defp deps do
     [    
       {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
-      {:phoenix, "~> 1.6.11"},
+      {:phoenix, "~> 1.7.9"},
       {:phoenix_html, "~> 3.1"},
-      {:phoenix_live_dashboard, "~> 0.5"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.17.11"},
+      {:phoenix_live_dashboard, "~> 0.8.2"},
+      {:phoenix_live_reload, "~> 1.4", only: :dev},
+      {:phoenix_live_view, "~> 0.20.1"},
       {:phoenix_pubsub, "~> 2.0"},
+      {:phoenix_view, "~> 2.0"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.11"},
