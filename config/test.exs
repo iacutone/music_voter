@@ -4,7 +4,11 @@ import Config
 # you can enable the server option below.
 config :music_voter, MusicVoterWeb.Endpoint,
   http: [port: 4002],
+  secret_key_base: "test-only-secret-key-base-test-only-secret-key-base-test-only-secret-key-base-0000",
   server: false
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Never hit the real YouTube API in tests; use the Mox mock.
+config :music_voter, :http_client, MusicVoter.HTTPClientMock

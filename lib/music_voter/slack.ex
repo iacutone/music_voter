@@ -2,7 +2,7 @@ defmodule MusicVoter.Slack do
   def post_to_slack(encoded_msg) do
     url = System.get_env("SLACK_WEBHOOK")
 
-    HTTPoison.post(
+    MusicVoter.HTTPClient.post(
       url,
       encoded_msg
     )

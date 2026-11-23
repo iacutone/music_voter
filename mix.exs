@@ -5,7 +5,7 @@ defmodule MusicVoter.MixProject do
     [
       app: :music_voter,
       version: "0.1.0",
-      elixir: "~> 1.14.2",
+      elixir: "~> 1.20",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -48,7 +48,8 @@ defmodule MusicVoter.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.5.1"},
       {:poison, "~> 4.0.1"},
-      {:html_entities, "~> 0.4"}
+      {:html_entities, "~> 0.4"},
+      {:mox, "~> 1.1", only: :test}
     ]
   end
 
