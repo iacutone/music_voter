@@ -1,7 +1,6 @@
 /* This file is for your main application css. */
+@import "./phoenix.css";
 
 footer button {
   margin-right: 10px;
 }
-
-@import "./phoenix.css";
