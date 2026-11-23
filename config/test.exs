@@ -8,7 +8,7 @@ config :music_voter, MusicVoterWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
 # Never hit the real YouTube API in tests; use the Mox mock.
 config :music_voter, :http_client, MusicVoter.HTTPClientMock

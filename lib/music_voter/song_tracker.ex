@@ -21,14 +21,14 @@ defmodule MusicVoter.SongTracker do
 
   # Server
 
-  def handle_call({:play, socket}, _from, state) do
+  def handle_call({:play, _socket}, _from, state) do
     songs = MusicVoter.SongList.songs(MusicVoter.SongList)
     song_vid = Enum.at(songs, 0).vid
     
     {:reply, song_vid, state}
   end
 
-  def handle_call({:next, socket, vid}, _from, state) do
+  def handle_call({:next, _socket, vid}, _from, state) do
     {song_positions, song_map, songs} = tracker(vid)
 
     song_vid = if Enum.count(songs) == song_positions[vid] + 1 do
@@ -40,7 +40,7 @@ defmodule MusicVoter.SongTracker do
     {:reply, song_vid, state}
   end
 
-  def handle_call({:previous, socket, vid}, _from, state) do
+  def handle_call({:previous, _socket, vid}, _from, state) do
     {song_positions, song_map, songs} = tracker(vid)
 
     song_vid = if song_positions[vid] == 0 do
@@ -56,7 +56,7 @@ defmodule MusicVoter.SongTracker do
     {:ok, ""}
   end
 
-  defp tracker(vid) do
+  defp tracker(_vid) do
     songs = MusicVoter.SongList.songs(MusicVoter.SongList)
 
     song_positions = Enum.reduce(songs, %{}, fn song, acc ->

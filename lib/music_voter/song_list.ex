@@ -30,7 +30,7 @@ defmodule MusicVoter.SongList do
   # Server
 
   def handle_cast({:increment_score, id, socket}, songs) do
-    updated_list = Enum.map(songs, fn song ->
+    updated_list = Enum.map(songs, fn %MusicVoter.Song{} = song ->
       if song.id == id do
         %MusicVoter.Song{song | score: song.score + 1, votes: [socket.assigns.user.id | song.votes]}
       else
@@ -42,8 +42,8 @@ defmodule MusicVoter.SongList do
     {:noreply, updated_list}
   end
 
-  def handle_cast({:add_comment, id, comment, socket}, songs) do
-    updated_list = Enum.map(songs, fn song ->
+  def handle_cast({:add_comment, id, comment, _socket}, songs) do
+    updated_list = Enum.map(songs, fn %MusicVoter.Song{} = song ->
       if song.id == id do
         %MusicVoter.Song{song | comments: [comment | song.comments]}
       else

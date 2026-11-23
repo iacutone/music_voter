@@ -20,5 +20,5 @@ defmodule MusicVoterWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :music_voter
+  use Gettext.Backend, otp_app: :music_voter
 end
