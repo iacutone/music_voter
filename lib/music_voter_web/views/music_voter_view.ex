@@ -5,7 +5,7 @@ defmodule MusicVoterWeb.MusicVoterView do
     content_tag(:footer, id: "controls", "data-vid": vid) do
       previous_button = 
         if Enum.count(songs) > 1 do
-          [content_tag(:button, "phx-click": "Previous", "phx-value":  vid) do
+          [content_tag(:button, "phx-click": "previous", "phx-value":  vid) do
             "Previous"
           end]
         end

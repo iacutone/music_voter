@@ -5,12 +5,13 @@ defmodule MusicVoter.MixProject do
     [
       app: :music_voter,
       version: "0.1.0",
-      elixir: "~> 1.14.2",
+      elixir: "~> 1.20",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      listeners: [Phoenix.CodeReloader]
     ]
   end
 
@@ -33,22 +34,23 @@ defmodule MusicVoter.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [    
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
-      {:phoenix, "~> 1.7.9"},
-      {:phoenix_html, "~> 3.1"},
-      {:phoenix_live_dashboard, "~> 0.8.2"},
-      {:phoenix_live_reload, "~> 1.4", only: :dev},
-      {:phoenix_live_view, "~> 0.20.1"},
-      {:phoenix_pubsub, "~> 2.0"},
+      {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
+      {:phoenix, "~> 1.8"},
+      {:phoenix_html, "~> 4.3"},
+      {:phoenix_html_helpers, "~> 1.0"},
+      {:phoenix_live_reload, "~> 1.6", only: :dev},
+      {:phoenix_live_view, "~> 1.2"},
+      {:phoenix_pubsub, "~> 2.2"},
       {:phoenix_view, "~> 2.0"},
-      {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
-      {:httpoison, "~> 1.5.1"},
-      {:poison, "~> 4.0.1"},
-      {:html_entities, "~> 0.4"}
+      {:telemetry_metrics, "~> 1.0"},
+      {:telemetry_poller, "~> 1.3"},
+      {:gettext, "~> 1.0"},
+      {:jason, "~> 1.4"},
+      {:plug_cowboy, "~> 2.7"},
+      {:httpoison, "~> 2.2"},
+      {:poison, "~> 6.0"},
+      {:html_entities, "~> 0.4"},
+      {:mox, "~> 1.1", only: :test}
     ]
   end
 

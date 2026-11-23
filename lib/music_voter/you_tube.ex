@@ -7,7 +7,7 @@ defmodule MusicVoter.YouTube do
     query = URI.encode(query)
     search = "#{youtube_v3_url}search?part=snippet&maxResults=5&q=#{query}&type=video&key=#{key}"
 
-    case HTTPoison.get!(search) do
+    case MusicVoter.HTTPClient.get!(search) do
       %{status_code: 403} = error ->
         Logger.error("API quota reached #{inspect(error)}")
         []

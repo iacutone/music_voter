@@ -19,10 +19,12 @@ defmodule MusicVoterWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: MusicVoterWeb
+      use Phoenix.Controller,
+        formats: [html: "View"],
+        layouts: [html: MusicVoterWeb.LayoutView]
 
       import Plug.Conn
-      import MusicVoterWeb.Gettext
+      use Gettext, backend: MusicVoterWeb.Gettext
       alias MusicVoterWeb.Router.Helpers, as: Routes
     end
   end
@@ -39,7 +41,7 @@ defmodule MusicVoterWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import MusicVoterWeb.Gettext
+      use Gettext, backend: MusicVoterWeb.Gettext
     end
   end
 
@@ -78,17 +80,16 @@ defmodule MusicVoterWeb do
   defp view_helpers do
     quote do
       # Use all HTML functionality (forms, tags, etc)
-      use Phoenix.HTML
+      import Phoenix.HTML
+      import Phoenix.HTML.Form
+      use PhoenixHTMLHelpers
 
       import Phoenix.Component
-      # Import LiveView helpers (live_render, live_component, live_patch, etc)
-      import Phoenix.LiveView.Helpers
-
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
       import MusicVoterWeb.ErrorHelpers
-      import MusicVoterWeb.Gettext
+      use Gettext, backend: MusicVoterWeb.Gettext
       alias MusicVoterWeb.Router.Helpers, as: Routes
     end
   end

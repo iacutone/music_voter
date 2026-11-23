@@ -1,9 +1,8 @@
 Welcome <%= @user.name %>
 
 <div id="container">
-  <% f = form_for :search, "#" %>
   <form action="#" phx-submit="search">
-    <%= text_input f, :query, placeholder: "Search for a song" %>
+    <%= text_input :search, :query, placeholder: "Search for a song" %>
     <%= submit "Search", phx_disable_with: "Searching..." %>
   </form>
 
@@ -22,13 +21,9 @@ Welcome <%= @user.name %>
 
   <ol class="song-list">
     <%= for song <- @songs do %>
-      <%= if song.vid == @song_playing_vid do %>
-        <li class="active song">
-      <% else %>
-        <li class="song">
-      <% end %>
-        <%= unless Enum.member?(song.votes, @user.id) do %>
-	  <button phx-click="inc" phx-value-song=<%= song.id %>>+</button>
+      <li class={if song.vid == @song_playing_vid, do: "active song", else: "song"}>
+        <%= if !Enum.member?(song.votes, @user.id) do %>
+	  <button phx-click="inc" phx-value-song={song.id}>+</button>
 	<% end %>
         <%= link(song.title, to: song.url, target: "_blank") %>
         <small>Score: <%= song.score %></small>
@@ -37,9 +32,9 @@ Welcome <%= @user.name %>
 	  <%= text_input :song, :comment, placeholder: "Comment" %>
 	  <%= submit "Add", phx_disable_with: "Adding" %>
 	</form>
-	<%= Enum.map(song.comments, fn(comment) -> %>
+	<%= for comment <- song.comments do %>
 	  <p><%= comment.user %> says: <%= comment.text %><br></p>
-	<% end) %>
+	<% end %>
       </li>
     <% end %>
   </ol>
@@ -58,7 +53,7 @@ Welcome <%= @user.name %>
              type="text/html" 
              width="640" 
              height="360"
-             src="https://www.youtube.com/embed/<%= @song_playing_vid %>?autoplay=1"
+             src={"https://www.youtube.com/embed/#{@song_playing_vid}?autoplay=1"}
              frameborder="0">
      </iframe>
   <% end %>

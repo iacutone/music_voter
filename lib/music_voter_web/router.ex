@@ -1,11 +1,10 @@
 defmodule MusicVoterWeb.Router do
   use MusicVoterWeb, :router
-  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_live_flash
+    plug :fetch_flash
     plug :put_root_layout, {MusicVoterWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
@@ -17,7 +16,6 @@ defmodule MusicVoterWeb.Router do
 
   scope "/", MusicVoterWeb do
     pipe_through :browser
-    live_dashboard "/dashboard"
 
     get "/", PageController, :index
 
